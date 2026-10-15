@@ -1,12 +1,13 @@
-const express = require('express');
-const cors = require('cors');
+import express, { Request, Response } from 'express';
+import cors from 'cors';
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-app.get('/api/v1/health', (req, res) => {
+
+app.get('/api/v1/health', (req: Request, res: Response) => {
   res.status(200).json({
     status: 'success',
     message: 'ControlLabs API operando correctamente',
@@ -14,4 +15,4 @@ app.get('/api/v1/health', (req, res) => {
   });
 });
 
-module.exports = app;
+export default app;
