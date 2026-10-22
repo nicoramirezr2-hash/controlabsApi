@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import loanRouter from './loan.routes';
-import userRouter from './user.Routes'; 
+import userRouter from './user.routes'; 
 import environmentRouter from './environment.routes'; 
 import assetRouter from './asset.routes';
 import incidentRouter from './incident.routes'; 
