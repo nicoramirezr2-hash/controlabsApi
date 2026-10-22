@@ -36,4 +36,3 @@ export const validateLoanPayload = (
 
   next();
 };
-
