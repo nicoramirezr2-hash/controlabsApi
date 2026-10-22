@@ -5,6 +5,7 @@ import { globalErrorHandler } from './middlewares/errorHandler.middleware';
 import loanRoutes from './routers/loan.routes';
 import environmentRoutes from './routers/environment.routes';
 import userRoutes from './routers/user.routes';
+import assetRoutes from './routers/asset.routes';
 
 const app = express();
 
@@ -15,6 +16,8 @@ app.use(requestLogger);
 app.use('/api/v1/loans', loanRoutes); 
 app.use('/api/v1/environments', environmentRoutes); 
 app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/assets', assetRoutes);
+
 app.get('/api/v1/health', (req: Request, res: Response) => {
   res.status(200).json({
     status: 'success',
