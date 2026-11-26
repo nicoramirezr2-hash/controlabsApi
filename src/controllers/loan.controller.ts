@@ -1,31 +1,59 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
+import { loanService } from '../container';
+import { ICreateLoanDTO } from '../dtos/loan.dto';
 
 export class LoanController {
     
-    public static createLoan = (req: Request, res: Response): void => {
-        res.status(501).json({ 
-            success: false, 
-            message: 'El registro de préstamos todavía no está implementado.' 
-        });
-    }
-    public static getLoansByFilter = (req: Request, res: Response): void => {
-        res.status(501).json({ 
-            success: false, 
-            message: 'La consulta del historial todavía no está implementada.' 
-        });
-    }
-    public static getLoanById = (req: Request, res: Response): void => {
-        const { id } = req.params;
-        res.status(501).json({ 
-            success: false, 
-            message: `La consulta del préstamo ${id} todavía no está implementada.` 
-        });
-    }
-    public static acceptLoanInventory = (req: Request, res: Response): void => {
-        const { id } = req.params;
-        res.status(501).json({ 
-            success: false, 
-            message: `La aceptación del préstamo ${id} todavía no está implementada.` 
-        });
-    }
+    public static createLoan = async (
+        req: Request<Record<string, string>, unknown, ICreateLoanDTO>,
+        res: Response,
+        next: NextFunction
+    ): Promise<void> => {
+        try {
+            const loan = await loanService.createLoan(req.body);
+            res.status(201).json({ success: true, data: loan });
+        } catch (error) {
+            next(error);
+        }
+    };
+
+    public static getLoansByFilter = async (
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ): Promise<void> => {
+        try {
+            const roomId = typeof req.query.roomId === 'string' ? req.query.roomId : undefined;
+            const loans = await loanService.getLoans({ roomId });
+            res.status(200).json({ success: true, data: loans });
+        } catch (error) {
+            next(error);
+        }
+    };
+
+    public static getLoanById = async (
+        req: Request<{ id: string }>,
+        res: Response,
+        next: NextFunction
+    ): Promise<void> => {
+        try {
+            const loan = await loanService.getLoanDetail(req.params.id);
+            res.status(200).json({ success: true, data: loan });
+        } catch (error) {
+            next(error);
+        }
+    };
+
+    public static acceptLoanInventory = async (
+        req: Request<{ id: string }>,
+        res: Response,
+        next: NextFunction
+    ): Promise<void> => {
+        try {
+            const loan = await loanService.acceptLoan(req.params.id);
+            res.status(200).json({ success: true, data: loan });
+        } catch (error) {
+            next(error);
+        }
+    };
 }

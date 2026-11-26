@@ -26,6 +26,12 @@ app.get('/api/v1/health', (req: Request, res: Response) => {
   });
 });
 
+if (process.env.NODE_ENV !== 'production') {
+  app.get('/__test/error', (_req, _res, next) => {
+    next(new Error('Error de prueba intencional.'));
+  });
+}
+
 app.use((_req, res) => { 
   res.status(404).json({ success: false, error: 'Ruta no encontrada.' }); 
 }); 
