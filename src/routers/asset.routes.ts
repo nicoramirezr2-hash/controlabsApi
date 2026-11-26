@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { AssetController } from '../controllers/asset.controller';
-import { validateAssetPayload } from '../middlewares/validate.asset.middleware';
+import { validateAssetPayload } from '../middlewares/validate.Asset.middleware';
 
 const router = Router();
 
